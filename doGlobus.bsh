@@ -1,0 +1,30 @@
+WGET=`which globus-url-copy`
+
+SERVER=http://web02.psps.ifa.hawaii.edu
+manifest=$1
+thread=$2
+threads=$3
+n=0
+cat $manifest | while read SLICE FNAME FSIZE
+do
+  URL="$SERVER/$SLICE/$FNAME"
+  FILESIZE=0
+  xfrnum=`expr $n \* $threads + $thread`
+  LOG=wget${xfrnum}.log
+  STARTED=`date -Iseconds`
+  while [ $FILESIZE -lt ${FSIZE} ]
+  do
+    echo globus-url-copy  -restart -vb $URL
+    ${WGET} -restart -vb $URL >>$LOG
+    sleep 3
+    if [ -e $FNAME ];then
+      FILESIZE=$(stat -c%s "$FNAME")
+    else
+      FILESIZE=0
+    fi
+  done
+  ENDED=`date -Iseconds`
+  echo $FNAME size $FILESIZE start $STARTED end $ENDED
+  n=`expr $n + 1`
+done
+

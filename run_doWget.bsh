@@ -1,0 +1,11 @@
+#!/bin/bash
+
+THREADS=${1:-8}
+
+LOG=wget.log
+rm -f $LOG
+
+for((i=0;i<$THREADS;i++))
+do
+  bash ./doWget.bsh manifest_$i $i $THREADS >> wget.log 2>&1 &
+done
