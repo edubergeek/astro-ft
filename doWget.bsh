@@ -1,13 +1,13 @@
 WGET=`which wget`
 
-SERVER=http://web02.psps.ifa.hawaii.edu
+#SERVER=http://dtn-itc.ifa.hawaii.edu
 manifest=$1
 thread=$2
 threads=$3
 n=0
-cat $manifest | while read SLICE FNAME FSIZE
+cat $manifest | while read SERVER FNAME FSIZE
 do
-  URL="$SERVER/$SLICE/$FNAME"
+  URL="$SERVER/$FNAME"
   FILESIZE=0
   xfrnum=`expr $n \* $threads + $thread`
   LOG=wget${xfrnum}.log
