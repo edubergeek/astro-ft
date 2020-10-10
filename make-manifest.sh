@@ -1,7 +1,6 @@
 #!/bin/bash
 
-URL=http://dtn-itc.ifa.hawaii.edu//ps1/wise-photo-z/
-#URL=$1
+URL=$1
 
 #<title>Index of /ps1/wise-photo-z</title>
 
