@@ -3,9 +3,9 @@
 # October 9, 2020
 
 URL=$1
-if test -z "$1"
+if test -z "$URL"
 then
-  echo "You must specific the URL to download from
+  echo "You must specific a URL to download from. Exiting."
   exit 1
 fi
 
