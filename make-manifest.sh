@@ -1,6 +1,13 @@
 #!/bin/bash
+# Curt Dodds
+# October 9, 2020
 
 URL=$1
+if test -z "$1"
+then
+  echo "You must specific the URL to download from
+  exit 1
+fi
 
 #<title>Index of /ps1/wise-photo-z</title>
 

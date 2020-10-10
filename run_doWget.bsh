@@ -1,6 +1,8 @@
 #!/bin/bash
 
-THREADS=${1:-8}
+THREADS=`ls manifest_* | wc -l`
+URL=`head -1 manifest_0|awk '{print $1}'`
+echo Downloading $URL $THREADS files at once ...
 
 LOG=wget.log
 rm -f $LOG
