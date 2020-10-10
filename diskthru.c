@@ -65,9 +65,9 @@ int main(int argc, char**argv)
   }
   printf("%f bytes in %ld seconds\n", totalB, totalSec);
   printf("%.1f GB %ld seconds\n", totalB / (1000*1000) / 1000, totalSec);
-  printf("%f MB/sec\n", totalB/totalSec/(1000*1000));
   
-  printf("%f Gbps\n", totalB/totalSec/(1000*1000*1000)*8*T);
+  printf("%f MB/sec\n", totalB/totalSec/(1000*1000)*(n/T));
+  printf("%f Gbps\n", totalB/totalSec/(1000*1000*1000)*8*(n/T));
   /*
   printf("%lf MB in %ld seconds\n", totalMB, totalSec);
   MBps = totalMB / (double)totalSec;
