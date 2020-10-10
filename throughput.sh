@@ -1,1 +1,1 @@
-grep \^Hot wget.log|./diskthru
+grep size wget.log|./diskthru 8
