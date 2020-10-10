@@ -6,4 +6,4 @@
 THREADS=`ls manifest_* | wc -l`
 
 # get the final download stats from the log and feed to diskthru
-grep '100%' wget.log C| wc -l
+egrep '100%' wget*.log| wc -l
