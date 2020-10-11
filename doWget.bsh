@@ -9,6 +9,7 @@ cat $manifest | while read SERVER FNAME FSIZE
 do
   URL="$SERVER/$FNAME"
   FILESIZE=0
+  FNAME=`basename $FNAME`
   xfrnum=`expr $n \* $threads + $thread`
   LOG=wget${xfrnum}.log
   STARTED=`date -Iseconds`
@@ -27,4 +28,3 @@ do
   echo $FNAME size $FILESIZE start $STARTED end $ENDED
   n=`expr $n + 1`
 done
-
