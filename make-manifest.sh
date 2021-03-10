@@ -12,7 +12,7 @@ SERVER=`expr $URL : 'http[s]*://\([^/]*\)'`
 
 default_pattern() {
 #  grep "href=\"$SERVER"
-  grep href= | egrep '.csv|.zg|.tgz'
+  grep href= | egrep '.csv|.zg|.tgz|.gz|.fits|.txt|.dat'
 }
 
 match_pattern() {
