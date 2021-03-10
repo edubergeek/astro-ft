@@ -12,7 +12,8 @@ SERVER=`expr $URL : 'http[s]*://\([^/]*\)'`
 
 default_pattern() {
 #  grep "href=\"$SERVER"
-  grep href= | egrep '.csv|.zg|.tgz|.gz|.fits|.txt|.dat|.bak'
+#  grep href= | egrep '.csv|.zg|.tgz|.gz|.fits|.txt|.dat|.bak'
+   egrep "href=\"[^\"]*\.[A-Za-z][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]?\""
 }
 
 match_pattern() {
