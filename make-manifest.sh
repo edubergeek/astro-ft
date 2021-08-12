@@ -9,6 +9,18 @@ then
   exit 1
 fi
 SERVER=`expr $URL : 'http[s]*://\([^/]*\)'`
+URLPATH=`expr $URL : '.*:[0-9]*\(\/.*[/]\)$'`
+
+ipp_pattern() {
+#  grep "href=\"$SERVER"
+#</th></tr><tr><td><a href="./B03481753  ">B03481753  </a></td><td>2018-02-01T05:08:54Z</td><td>IPP_PSPS</td><td>
+   egrep "href=\"\.\/[A-Z0-9 ]*\""
+}
+
+dtn_pattern() {
+#  grep "href=\"$SERVER"
+   egrep "href=\"[A-Z0-9a-z].*\""
+}
 
 default_pattern() {
 #  grep "href=\"$SERVER"
@@ -21,6 +33,12 @@ match_pattern() {
 #  http://archive.stsci.edu/*)
 #    mast_pattern
 #    ;;
+  http://128.171.123.254:22282/*)
+    ipp_pattern
+    ;;
+  http://dtn-itc.ifa.hawaii.edu/*)
+    dtn_pattern
+    ;;
   *)
     default_pattern
     ;;
@@ -46,12 +64,27 @@ sed -e 's/.*href="\([htps]*[^"]*\)".*$/\1/' <href-list | strip_server >mani-list
 # strip URL down to just the web root URL
 # the rest of the URL is in each row in mani-list
 # only do this if the href-list contains http:
-grep 'http[s]*://' html-list >/dev/null 2>&1 && URL=`expr $URL : '\(http[s]*://[^/]*\)'`
+#grep 'http[s]*://' html-list >/dev/null 2>&1 && URL=`expr $URL : '\(http[s]*://[^/]*\)'`
+URL=`expr $URL : '\(http[s]*://[^/]*\)'`
+#grep 'http[s]*://' html-list >/dev/null 2>&1 && URLPATH=`expr $URLPATH : "$URL"'\(.*\)'`
+URLPATH=`expr $1 : "$URL"'\(.*\)'`
+
+echo SERVER $SERVER
+echo URL  $URL
+echo URLPATH  $URLPATH
+
 
 cat mani-list | while read f
 do
-  fsize=`curl -L -I $URL/$f 2>/dev/null | grep Content-Length | awk '{print $2}'`
-  echo $URL $f $fsize | tr -d "\r"
+  case $URL in
+  http://128.171.123.254:22282)
+    fsize=`curl -s -L $URL/$URLPATH/$f | grep 'tr.*href=' | sed -e 's/.*>\([0-9][0-9]*\)<.*$/\1/g'`
+    ;;
+  *)
+    fsize=`curl -L -I $URL/$URLPATH/$f 2>/dev/null | grep Content-Length | awk '{print $2}'`
+    ;;
+  esac
+  echo $URL/$URLPATH $f $fsize | tr -d "\r"
 done | awk '{if(NF==3) print ;}' >manifest
-rm -f mani-list href-list html-list
+#rm -f mani-list href-list html-list
 exit 0
