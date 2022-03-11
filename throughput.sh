@@ -15,3 +15,5 @@ THREADS=`ls manifest_* | wc -l`
 
 # get the final download stats from the log and feed to diskthru
 grep size wget.log|./diskthru $THREADS
+
+echo Using $THREADS threads
