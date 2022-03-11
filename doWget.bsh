@@ -1,17 +1,18 @@
+#!/bin/bash
+
 WGET=`which wget`
 
-#SERVER=http://dtn-itc.ifa.hawaii.edu
 manifest=$1
 thread=$2
 threads=$3
 n=0
-cat $manifest | while read SERVER FNAME FSIZE
+cat $manifest | while read PROTO SERVER URLPATH FNAME FSIZE FILETYPE
 do
-  URL="$SERVER/$FNAME"
+  URL="$PROTO://$SERVER/$URLPATH/$FNAME"
   FILESIZE=0
-  FNAME=`basename $FNAME`
+  #FNAME=`basename $FNAME`
   xfrnum=`expr $n \* $threads + $thread`
-  LOG=wget${xfrnum}.log
+  LOG=logs/wget${xfrnum}.log
   STARTED=`date -Iseconds`
   while [ $FILESIZE -lt ${FSIZE} ]
   do
