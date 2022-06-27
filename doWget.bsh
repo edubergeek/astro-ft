@@ -14,18 +14,23 @@ do
   xfrnum=`expr $n \* $threads + $thread`
   LOG=logs/wget${xfrnum}.log
   STARTED=`date -Iseconds`
+  if [ 0 -eq ${FSIZE} ]
+  then
+    echo wget --continue --progress=bar:force -nd --append-output=$LOG "$URL"
+    ${WGET} --continue --progress=bar:force -nd --append-output=$LOG "$URL"
+  fi
   while [ $FILESIZE -lt ${FSIZE} ]
   do
-    echo wget --continue --progress=bar:force -nd --append-output=$LOG $URL
-    ${WGET} --continue --progress=bar:force -nd --append-output=$LOG $URL
+    echo wget --continue --progress=bar:force -nd --append-output=$LOG "$URL"
+    ${WGET} --continue --progress=bar:force -nd --append-output=$LOG "$URL"
     sleep 3
-    if [ -e $FNAME ];then
+    if [ -e "$FNAME" ];then
       FILESIZE=$(stat -c%s "$FNAME")
     else
       FILESIZE=0
     fi
   done
   ENDED=`date -Iseconds`
-  echo $FNAME size $FILESIZE start $STARTED end $ENDED
+  echo "$FNAME" size "$FILESIZE" start "$STARTED" end "$ENDED"
   n=`expr $n + 1`
 done
