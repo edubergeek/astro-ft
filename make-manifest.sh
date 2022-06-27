@@ -79,9 +79,11 @@ do
   case $URL in
   http://128.171.123.254:22282)
     fsize=`curl -s -L $URL/$URLPATH/$f | grep 'tr.*href=' | sed -e 's/.*>\([0-9][0-9]*\)<.*$/\1/g'`
+    [ -z $fsize ] ? fsize=0
     ;;
   *)
     fsize=`curl -L -I $URL/$URLPATH/$f 2>/dev/null | grep Content-Length | awk '{print $2}'`
+    [ -z $fsize ] ? fsize=0
     ;;
   esac
   echo $URL/$URLPATH $f $fsize | tr -d "\r"
