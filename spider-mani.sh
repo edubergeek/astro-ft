@@ -44,7 +44,12 @@ file_type() {
 
 filesize() {
   fsize=`curl -L -I $1/$2 2>/dev/null | grep Content-Length | awk '{print $2}'`
-  echo $fsize | tr -d "\r"
+  if test -z "$ftyp"
+  then
+    echo "0"
+  else
+    echo $fsize | tr -d "\r"
+  fi
 }
 
 
@@ -62,7 +67,7 @@ do
     then
       download $1 $2/$f ""
     else
-      echo $PROTO $1 $2 $f `filesize ${1}$2 $f` $ftyp >>manifest
+      echo $PROTO "$1" "$2" "$f" `filesize "${1}${2}" "$f"` "$ftyp" >>manifest
     fi
     ;;
   *)
