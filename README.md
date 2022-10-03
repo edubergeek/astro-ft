@@ -10,7 +10,7 @@ cd astro-ft
 
 ## Prepare the download manifest
 ```sh
-bash make-manifest.sh http://dtn-itc.ifa.hawaii.edu/ps1/wise-photo-z/
+bash spider-manifest.sh http://dtn-itc.ifa.hawaii.edu/ps1/wise-photo-z/
 bash manifest.sh
 ```
 
@@ -65,4 +65,4 @@ On a 100G network this typically uses ~**12Gbps** of bandwidth
 
 
 Curt Dodds
-October 9, 2020
+October 2, 2022
