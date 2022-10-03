@@ -1,3 +1,3 @@
 
 clean:
-	rm -f *.log *.bak manifest_*
+	rm -f *.log *.bak manifest_* logs/*
