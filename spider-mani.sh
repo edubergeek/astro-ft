@@ -37,6 +37,7 @@ file_type() {
   *.bak) echo mssql;;
   *.sh) echo shell;;
   *.fits) echo fits;;
+  *.cdf) echo cdf;;
   *.psf) echo psf;;
   *.mdc) echo mdc;;
   esac
@@ -56,7 +57,7 @@ filesize() {
 #href="./B03047939  "
 #href="Hot_PS1_PV3_17_001_42.bak"
 download() {
-curl --silent ${1}$2/$3 | egrep -v 'Parent Directory|index.txt' | egrep '^.*href="[A-Z0-9a-z./_]* *">' | sed -e 's:^.*href="\([A-Z0-9a-z./_]*\) *">.*$:\1:'  | while read f
+curl --silent ${PROTO}://${1}$2/$3 | egrep -v 'Parent Directory|index.txt' | egrep '^.*href="[A-Z0-9a-z./_]* *">' | sed -e 's:^.*href="\([A-Z0-9a-z./_]*\) *">.*$:\1:'  | while read f
 do
   f=`basename $f`
   case $f in
